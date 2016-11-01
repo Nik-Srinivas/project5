@@ -48,9 +48,30 @@ public abstract class Critter {
 		myPackage = Critter.class.getPackage().toString().split(" ")[1];
 	}
 	
-	protected String look(int direction, boolean steps) {return "";}
+	protected String look(int direction, boolean steps) {
+		this.energy -= Params.look_energy_cost;
+		int x_temp = this.x_coord;
+		int y_temp = this.y_coord;
+		String key = getPositionKey();
+		String return_val = null;
+		
+		if (steps == false) { // Walk 
+			move(1, direction);
+			if (positionLog.containsKey(key)){	
+				return_val = positionLog.get(key).get(0).toString();
+			}
+		}
+		else if (steps == true) { // Run  
+			move(2, direction);
+			if (positionLog.containsKey(key)){	
+				return_val = positionLog.get(key).get(0).toString();
+			}
+		}
+		this.x_coord = x_temp;
+		this.y_coord = y_temp;
+		return return_val;
+	}
 	
-	/* rest is unchanged from Project 4 */
 	
 	
 	private static java.util.Random rand = new java.util.Random();
