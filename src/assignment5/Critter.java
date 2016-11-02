@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javafx.scene.shape.Shape;
+
 public abstract class Critter {
 	/* NEW FOR PROJECT 5 */
 	public enum CritterShape {
@@ -394,6 +396,13 @@ public abstract class Critter {
 }
 	
 	public static void displayWorld() {
+		Main.grid.getChildren().clear();
+		
+		
+		
+		
+		
+		
 		Set<Critter> critterWorld = CritterWorld.getCritterList();
 		Critter[][] display = new Critter[Params.world_width + 2][Params.world_height + 2];
 		for (Critter c : critterWorld) {
@@ -402,38 +411,17 @@ public abstract class Critter {
 		Iterator worldIt = critterWorld.iterator();
 		while (worldIt.hasNext()) {
 			Critter c = (Critter) worldIt.next();
-			display[c.x_coord + 1] [c.y_coord + 1] = c;
+			display[c.x_coord] [c.y_coord] = c;
 		}
 		int displayHeight = Params.world_height + 2;
 		int displayWidth = Params.world_width + 2;
-		String printStream = new String();
 		for (int y = 0; y < displayHeight; y++) {
 			for (int x = 0; x < displayWidth; x++) {
-				//check for border
-				if ((x == 0) || (y == 0)) {
-					if ((x == 0) && (y == 0)) {printStream += "+";}
-					else if (x == (displayWidth - 1)) {printStream += "+\n";}
-					else if (y == (displayHeight - 1)) {printStream += "+";;}
-					else if (x == 0) {printStream += "|";}
-					else if (y == 0) {printStream += "-";}
-				} else if (x == (displayWidth - 1)) {
-					if (y == displayHeight -1) {printStream += "+\n";}
-					else {printStream += "|\n";}
-	 			} else if (y == (displayHeight - 1)) {
-	 				printStream += "-";
-	 				
-				}
-	 			else {
-	 				Critter critterToPrint = display[x][y];
-	 				if (critterToPrint != null) {
-	 					printStream += critterToPrint.toString();
-	 				} else {
-	 					printStream += " ";
-	 				}
-	 			}
+				Critter toAdd = display[x][y];
+				Shape s = Painter.getIcon(1);
+				Main.grid.add(s, x, y);
 			}
 		}
-		System.out.print(printStream);
 	}
 	
 	

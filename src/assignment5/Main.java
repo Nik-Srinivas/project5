@@ -7,8 +7,13 @@ import java.io.PrintStream;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Scanner;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
+import assignment5.Painter;
 
-public class Main {
+public class Main extends Application{
 	
 	// Added for testing original 
 	static Scanner kb;	// scanner connected to keyboard input, or input file
@@ -24,12 +29,32 @@ public class Main {
         myPackage = Critter.class.getPackage().toString().split(" ")[1];
     }
 
+    //APPLICATION STUFF
+    static GridPane grid = new GridPane();
     
-    
+	@Override
+	public void start(Stage primaryStage) {
+		try {			
+
+			grid.setGridLinesVisible(true);
+
+			Scene scene = new Scene(grid, Params.world_width, Params.world_height);
+			primaryStage.setScene(scene);
+			
+			primaryStage.show();
+			
+			// Paints the icons.
+//			Painter.paint();
+			
+		} catch(Exception e) {
+			e.printStackTrace();		
+		}
+	}
+
     
 
 	public static void main(String[] args) {
-		// launch(args);
+		launch(args);
 		
 		if (args.length != 0) {
             try {
