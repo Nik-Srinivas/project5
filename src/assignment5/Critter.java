@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javafx.scene.shape.Shape;
+import javafx.scene.shape.*;
 
 public abstract class Critter {
 	/* NEW FOR PROJECT 5 */
@@ -31,7 +31,7 @@ public abstract class Critter {
 	 * need to, but please preserve that intent as you implement them. 
 	 */
 	public javafx.scene.paint.Color viewColor() { 
-		return javafx.scene.paint.Color.WHITE; 
+		return javafx.scene.paint.Color.DEEPSKYBLUE; 
 	}
 	
 	public javafx.scene.paint.Color viewOutlineColor() { return viewColor(); }
@@ -116,10 +116,10 @@ public abstract class Critter {
 		else if (direction == 6) { 					       this.y_coord +=  speed; }
 		else if (direction == 7) { this.x_coord +=  speed; this.y_coord +=  speed; }
 		//Screen wrap-around catches! (Negative and over sizes)
-		if (this.x_coord > Params.world_width)  { this.x_coord = this.x_coord - (Params.world_width + 1);  }
-		if (this.y_coord > Params.world_height) { this.y_coord = this.y_coord - (Params.world_height + 1); }
-		if (this.x_coord < 0) { this.x_coord = this.x_coord + (Params.world_width + 1);  }
-		if (this.y_coord < 0) { this.y_coord = this.y_coord + (Params.world_height + 1); }
+		if (this.x_coord >= Params.world_width)  { this.x_coord = this.x_coord - (Params.world_width);  }
+		if (this.y_coord >= Params.world_height) { this.y_coord = this.y_coord - (Params.world_height); }
+		if (this.x_coord < 0) { this.x_coord = this.x_coord + (Params.world_width);  }
+		if (this.y_coord < 0) { this.y_coord = this.y_coord + (Params.world_height); }
 	}
 	
 	/**
@@ -418,29 +418,58 @@ public abstract class Critter {
 	
 	public static void displayWorld() {
 		Main.grid.getChildren().clear();
-		
-		
-		
-		
-		
-		
 		Set<Critter> critterWorld = CritterWorld.getCritterList();
-		Critter[][] display = new Critter[Params.world_width + 2][Params.world_height + 2];
-		for (Critter c : critterWorld) {
-			display[c.x_coord + 1][c.y_coord + 1] = c;
-		}
+		Critter[][] display = new Critter[Params.world_width][Params.world_height];
+//		for (Critter c : critterWorld) {
+//			display[c.x_coord - 1][c.y_coord - 1] = c;
+//		}
 		Iterator worldIt = critterWorld.iterator();
 		while (worldIt.hasNext()) {
 			Critter c = (Critter) worldIt.next();
 			display[c.x_coord] [c.y_coord] = c;
 		}
-		int displayHeight = Params.world_height + 2;
-		int displayWidth = Params.world_width + 2;
+		int displayHeight = Params.world_height;
+		int displayWidth = Params.world_width;
 		for (int y = 0; y < displayHeight; y++) {
 			for (int x = 0; x < displayWidth; x++) {
 				Critter toAdd = display[x][y];
-				Shape s = Painter.getIcon(1);
-				Main.grid.add(s, x, y);
+				Shape s = null;
+				Polygon p = new Polygon();
+				if (toAdd == null) {
+					s = Painter.getIcon(0);
+				} else {
+					switch(toAdd.viewShape()) {
+						
+						case CIRCLE:
+							s = new Circle(Main.sceneScale/2);
+							s.setFill(toAdd.viewColor());
+							s.setStroke(toAdd.viewOutlineColor());
+							break;
+						case SQUARE:
+							s = new Rectangle(Main.sceneScale, Main.sceneScale);
+							s.setFill(toAdd.viewColor());
+							s.setStroke(toAdd.viewOutlineColor());
+							break;
+						case TRIANGLE:
+							Double doubleSceneScale = Double.valueOf((double) Main.sceneScale);
+							p.getPoints().addAll(new Double[] {
+								0.0, 0.0,
+								doubleSceneScale, 0.0,
+								0.0, doubleSceneScale,
+							});
+							break;
+						case DIAMOND:
+							break;
+						case STAR:
+							break;
+					}
+				}
+				if (s == null) {
+					Main.grid.add(p, x * Main.sceneScale, y * Main.sceneScale);
+				} else {
+					Main.grid.add(s, x * Main.sceneScale, y * Main.sceneScale);
+				}
+				
 			}
 		}
 	}
@@ -555,7 +584,6 @@ public abstract class Critter {
 		protected static List<Critter> getPopulation() {
 			return population;
 		}
-		
 		/*
 		 * This method getBabies has to be modified by you if you are not using the babies
 		 * ArrayList that has been provided in the starter code.  In any case, it has to be

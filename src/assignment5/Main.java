@@ -18,6 +18,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import assignment5.Painter;
 
@@ -44,15 +45,33 @@ public class Main extends Application {
 //			e.printStackTrace();		
 //		}
 //	}
+    public static int sceneScale = 50;
+    public class SecondStage extends Stage {
+    	Label x = new Label("Second stage");
+    	VBox y = new VBox();
 
+    	SecondStage(){
+    	    y.getChildren().add(x);
+    	    this.setTitle("World");
+    	    Scene scene = new Scene(grid, Params.world_width * sceneScale, Params.world_height * sceneScale);
+    	    scene.setFill(javafx.scene.paint.Color.ANTIQUEWHITE);
+    	    this.setScene(scene);
+    	    this.show();
+    	   }    
+    	}
+    
     @Override
     public void start(Stage primaryStage) {
+    	new SecondStage();
     	GridPane myLayout = new GridPane();
         primaryStage.setTitle("Makin' Critters!");
         Button show = new Button("Show Me The World!");
         Button make = new Button("Make Critter!");
 //        Button stats = new Button("What's Craig Up To?");
         Button step = new Button("Run a Time Step!");
+        
+//		primaryStage.setScene(scene);
+//		primaryStage.show();
 //        Button quit = new Button("Show Me The World!");
         
         // Slider for time steps
@@ -98,7 +117,7 @@ public class Main extends Application {
         	}
         });
         
-        
+        Critter.displayWorld();
         myLayout.add(show, 0, 5);
         myLayout.add(critter_name, 0, 0);
         myLayout.add(make, 5, 0);
