@@ -16,7 +16,7 @@ public class Painter {
 		
 		switch(shapeIndex) {
 		case 0: s = new Rectangle(size, size); 
-			s.setFill(javafx.scene.paint.Color.ANTIQUEWHITE); break;
+			s.setFill(javafx.scene.paint.Color.TRANSPARENT); break;
 		case 1: s = new Circle(size/2);
 			s.setStroke(javafx.scene.paint.Color.ANTIQUEWHITE);
 			s.setFill(javafx.scene.paint.Color.BLUE); 

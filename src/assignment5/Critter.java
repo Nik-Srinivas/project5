@@ -459,8 +459,31 @@ public abstract class Critter {
 							});
 							break;
 						case DIAMOND:
+							doubleSceneScale = Double.valueOf((double) Main.sceneScale);
+							p.getPoints().addAll(new Double[] {
+									doubleSceneScale/2.0, 0.0,
+									doubleSceneScale, doubleSceneScale/2.0,
+									doubleSceneScale/2.0, doubleSceneScale,
+									0.0, doubleSceneScale/2.0,
+									
+							});
 							break;
 						case STAR:
+							doubleSceneScale = Double.valueOf((double) Main.sceneScale);
+							p.getPoints().addAll(new Double[] {
+									doubleSceneScale/2.0, 0.0, //point 1
+									doubleSceneScale * .6, doubleSceneScale * .4,//point 2
+									doubleSceneScale, doubleSceneScale/2.0, //point 3
+									doubleSceneScale * .6, doubleSceneScale * .6,//point 4
+									doubleSceneScale, doubleSceneScale, //point 5
+									doubleSceneScale/2.0, doubleSceneScale * .8,//point 6
+									0.0, doubleSceneScale,//point 7
+									doubleSceneScale * .4, doubleSceneScale * .6,//point 8
+									0.0, doubleSceneScale/2.0,//point 9
+									doubleSceneScale * .4, doubleSceneScale * .4,//point 10
+									
+									
+							});
 							break;
 					}
 				}

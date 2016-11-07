@@ -35,8 +35,8 @@ public class Main extends Application {
 	static {
 		myPackage = Main.class.getPackage().toString().split(" ")[1];
 	}
-	private String[] classNames = new String[20];
-	File myCritters = new File("C:/Users/Alienware/Desktop/422C Programs/project5/src/assignment5"); // File containing list of critter classes
+	private String[] classNames = new String[100];
+	
  	private int numberOfFiles = 0;
  	private int numberOfCritters = 0;
 	private String[] critterNames;
@@ -101,6 +101,9 @@ public class Main extends Application {
  	
 	 @Override
 	    public void start(Stage primaryStage) throws ClassNotFoundException {
+		String workingDir = System.getProperty("user.dir") + "/src/assignment5";
+		File myCritters = new File(workingDir); // File containing list of critter classes
+		 System.out.println("Current working directory : " + workingDir);
 		 	listFilesForFolder(myCritters);
 		 	for (int k = 0; k < numberOfFiles - 1; k += 1) {
 		 		try {
@@ -132,6 +135,7 @@ public class Main extends Application {
 	        Button seed = new Button("Set Seed");
 	        Button step = new Button("Run Time Step");
 	        Button quit = new Button("Quit");
+	        Button animate = new Button("Animate");
 	        
 	        ObservableList<String> differentCritters = FXCollections.observableArrayList();
 	        for (int i = 0; i < numberOfCritters; i += 1) {
@@ -198,6 +202,8 @@ public class Main extends Application {
 	        		int val = Integer.parseInt(step_number.getText());
 	        		for (int i = 0; i < val; i += 1){
 	        			Critter.worldTimeStep();
+	        			//ADDED THIS SO DISPLAY AUTO UPDATES
+	        			Critter.displayWorld();
 	        		}
 	        		for (int i = 0; i < numberOfCritters; i += 1) { 
 		        		String critter_stats = updateStats(critterNames[i]);
@@ -212,6 +218,13 @@ public class Main extends Application {
 	            	System.exit(1);
 	            }
 	        });
+	        animate.setOnAction(new EventHandler<ActionEvent>() {
+	        	@Override
+	        	public void handle(ActionEvent event) {
+	        		Animate.animate(3);
+	        		
+	        	}
+	        });
 	        
 	        myLayout.add(show, 0, 0);
 	        myLayout.add(number_critters, 0, 1);
@@ -219,6 +232,7 @@ public class Main extends Application {
 	        myLayout.add(step, 5, 7);
 	        myLayout.add(step_number, 0, 7);
 	        myLayout.add(quit, 0, 25);
+	        myLayout.add(animate,  0, 30);
 	        myLayout.add(critterStatsList, 0, 20);
 	        myLayout.add(listOfCritters, 0, 2);
 	        
