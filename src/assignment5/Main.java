@@ -36,16 +36,12 @@ public class Main extends Application {
 	static {
 		myPackage = Main.class.getPackage().toString().split(" ")[1];
 	}
+
 	private String[] classNames = new String[100];
 	
  	private int numberOfFiles = 0;
  	private int numberOfCritters = 0;
 	private String[] critterNames;
-	
-	final String[] imageNames = new String[]{"AMERICA"};
-    final Image[] images = new Image[imageNames.length];
-    final ImageView[] pics = new ImageView[imageNames.length];
-	//final TitledPane[] tps = new TitledPane[imageNames.length];
 	
     public String updateStats(String critter){
     	ByteArrayOutputStream output_capture = new ByteArrayOutputStream();
@@ -101,11 +97,11 @@ public class Main extends Application {
     
  	
 	 @Override
-	    public void start(Stage primaryStage) throws ClassNotFoundException {
-		String workingDir = System.getProperty("user.dir") + "/src/assignment5";
-		File myCritters = new File(workingDir); // File containing list of critter classes
-		 System.out.println("Current working directory : " + workingDir);
-		 	listFilesForFolder(myCritters);
+	 public void start(Stage primaryStage) throws ClassNotFoundException {
+		 String workingDir = System.getProperty("user.dir") + "/src/assignment5";	
+		 File myCritters = new File(workingDir);
+		 listFilesForFolder(myCritters);
+
 		 	for (int k = 0; k < numberOfFiles - 1; k += 1) {
 		 		try {
 		 			int cutoff = classNames[k].indexOf(".");
