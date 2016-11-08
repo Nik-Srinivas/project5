@@ -86,10 +86,15 @@ public class Main extends Application {
  	static GridPane grid = new GridPane();
  	public static int sceneScale = 50;
     public class SecondStage extends Stage {
+    	Rectangle2D primaryScreenBounds2 = Screen.getPrimary().getVisualBounds();
     	Label x = new Label("Second stage");
     	VBox y = new VBox();
 
     	SecondStage(){
+    		this.setX(primaryScreenBounds2.getMaxX()/2);
+            this.setY(primaryScreenBounds2.getMinY());
+            this.setWidth(primaryScreenBounds2.getWidth()/2);
+            this.setHeight(primaryScreenBounds2.getHeight());
     	    y.getChildren().add(x);
     	    this.setTitle("World");
     	    Scene scene = new Scene(grid, Params.world_width * sceneScale, Params.world_height * sceneScale);
@@ -98,6 +103,41 @@ public class Main extends Application {
     	    this.show();
     	   }    
     	}
+    
+    static VBox box = new VBox();
+    public class ThirdStage extends Stage {
+    	Rectangle2D primaryScreenBounds2 = Screen.getPrimary().getVisualBounds();
+    	final Accordion critterStatsList = new Accordion();
+        final TitledPane[] tps = new TitledPane[numberOfCritters];
+    	ThirdStage(){
+    		this.setX(primaryScreenBounds2.getMinX());
+            this.setY(primaryScreenBounds2.getMaxY()/2);
+            this.setWidth(primaryScreenBounds2.getWidth()/2);
+            this.setHeight(primaryScreenBounds2.getHeight()/2);
+            // Accordion to show statistics
+	        for (int i = 0; i < numberOfCritters; i += 1) { 
+	        		String critter_stats = updateStats(critterNames[i]);
+	        	    tps[i] = new TitledPane();
+	        	    tps[i].setText(critterNames[i] + " Statistics (" + critterNames[i].toString() + ")");
+	        	    tps[i].setContent(new Label("\n" + critter_stats));
+	        }   
+	        critterStatsList.getPanes().addAll(tps);
+	        critterStatsList.setExpandedPane(tps[0]);
+	        
+	        box.getChildren().addAll(critterStatsList);
+	        
+	        this.setScene(new Scene(box, primaryScreenBounds2.getWidth()/2, primaryScreenBounds2.getHeight()/2));
+	        this.show(); 
+    	}
+    	
+    	public void refreshStats(){
+    		for (int i = 0; i < numberOfCritters; i += 1) { 
+        		String critter_stats = updateStats(critterNames[i]);
+        	    tps[i].setText(critterNames[i] + " Statistics");
+        	    tps[i].setContent(new Label("\n" + critter_stats));
+    		}
+    	}
+    }
     
  	//Jonah
 	 @Override
@@ -150,17 +190,8 @@ public class Main extends Application {
 	        final ComboBox<String> listOfCritters = new ComboBox<>(differentCritters);
 	        listOfCritters.setValue(critterNames[0]);
 	        
-	        // Accordion for show statistics
-	        final Accordion critterStatsList = new Accordion();
-	        final TitledPane[] tps = new TitledPane[numberOfCritters];
-	        for (int i = 0; i < numberOfCritters; i += 1) { 
-	        		String critter_stats = updateStats(critterNames[i]);
-	        	    tps[i] = new TitledPane();
-	        	    tps[i].setText(critterNames[i] + " Statistics (" + critterNames[i].toString() + ")");
-	        	    tps[i].setContent(new Label("\n" + critter_stats));
-	        }   
-	        critterStatsList.getPanes().addAll(tps);
-	        critterStatsList.setExpandedPane(tps[0]);
+	        // Create Stats window
+	        ThirdStage statistics = new ThirdStage();
 	        
 	        // TextFields for integer input (make and step)
 	        TextField number_critters = new TextField();
@@ -190,11 +221,7 @@ public class Main extends Application {
 	        		} catch (InvalidCritterException e1) {
 	        			System.out.print("error processing: " + critterType + "\n");
 	        		}
-	        		for (int i = 0; i < numberOfCritters; i += 1) { 
-		        		String critter_stats = updateStats(critterNames[i]);
-		        	    tps[i].setText(critterNames[i] + " Statistics");
-		        	    tps[i].setContent(new Label("\n" + critter_stats));
-	        		}
+	        		statistics.refreshStats();
 	        		Critter.displayWorld();
 	        	}
 	        });
@@ -207,11 +234,7 @@ public class Main extends Application {
 	        			//ADDED THIS SO DISPLAY AUTO UPDATES
 	        			Critter.displayWorld();
 	        		}
-	        		for (int i = 0; i < numberOfCritters; i += 1) { 
-		        		String critter_stats = updateStats(critterNames[i]);
-		        	    tps[i].setText(critterNames[i] + " Statistics");
-		        	    tps[i].setContent(new Label("\n" + critter_stats));
-	        		} 
+	        		statistics.refreshStats();
 	        		Critter.displayWorld();
 	        	}
 	        });
@@ -222,11 +245,7 @@ public class Main extends Application {
 	        		for (int i = 0; i < val; i += 1){
 	        			Critter.setSeed(val);
 	        		}
-	        		for (int i = 0; i < numberOfCritters; i += 1) { 
-		        		String critter_stats = updateStats(critterNames[i]);
-		        	    tps[i].setText(critterNames[i] + " Statistics");
-		        	    tps[i].setContent(new Label("\n" + critter_stats));
-	        		} 
+	        		statistics.refreshStats();
 	        		Critter.displayWorld();
 	        	}
 	        });
@@ -312,7 +331,7 @@ public class Main extends Application {
 	        borders.setLeft(left);
 	        //borders.setCenter(center);
 	        
-	        primaryStage.setScene(new Scene(center, primaryScreenBounds.getWidth()/2, primaryScreenBounds.getHeight()));
+	        primaryStage.setScene(new Scene(center, primaryScreenBounds.getWidth()/2, primaryScreenBounds.getHeight()/2));
 	        primaryStage.show();
 	        Critter.displayWorld();
 	    }
