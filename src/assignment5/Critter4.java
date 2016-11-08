@@ -6,6 +6,7 @@ import assignment5.Critter.CritterShape;
 
 /*
  * Alex Lostak ajl3287
+ * LOOK IMPLEMENTED IN FIGHT
  * This Critter is the Peaceful Wanderer. A man among beasts his only duty is to wander.
  * He continues straight in one direction, never fighting, only eating the Algae he comes across.
  * Shrubberies Acquired will show how many Algae the Peaceful Wanderer has eaten. 
@@ -45,7 +46,7 @@ public class Critter4 extends Critter{
 	public javafx.scene.paint.Color viewOutlineColor() { return javafx.scene.paint.Color.GREY; }
 	
 	@Override
-	public javafx.scene.paint.Color viewColor() { return javafx.scene.paint.Color.BROWN; }
+	public javafx.scene.paint.Color viewColor() { return javafx.scene.paint.Color.ROSYBROWN; }
 	
 	@Override
 	public javafx.scene.paint.Color viewFillColor() { return viewColor(); }
