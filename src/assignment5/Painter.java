@@ -11,16 +11,21 @@ public class Painter {
 	 */
 	static Shape getIcon(int shapeIndex) {
 		Shape s = null;
-		int size = 1;
+		int size = Main.sceneScale;
+		
 		
 		switch(shapeIndex) {
 		case 0: s = new Rectangle(size, size); 
-			s.setFill(javafx.scene.paint.Color.RED); break;
-		case 1: s = new Circle(size/2); 
-			s.setFill(javafx.scene.paint.Color.GREEN); break;
-		}
+			s.setFill(javafx.scene.paint.Color.TRANSPARENT); break;
+		case 1: s = new Circle(size/2);
+			s.setStroke(javafx.scene.paint.Color.ANTIQUEWHITE);
+			s.setFill(javafx.scene.paint.Color.BLUE); 
+			break;
+		case 2: s = new Rectangle(size, size); 
+			s.setFill(javafx.scene.paint.Color.DEEPSKYBLUE); break;
+		} 
 		// set the outline of the shape
-		s.setStroke(javafx.scene.paint.Color.BLUE); // outline
+		s.setStroke(javafx.scene.paint.Color.DARKSLATEGREY); // outline
 		return s;
 	}
 	
@@ -29,14 +34,10 @@ public class Painter {
 	 */
 	public static void paint() {
 		Main.grid.getChildren().clear(); // clean up grid.
-//		for (int i = 0; i <= 100; i++) {
-//			Shape s = getIcon(0);	// convert the index to an icon.
-//			Main.grid.add(s, i, i); // add the shape to the grid.
-//		}
-		for (int i = 0; i < 100; i++) {
-			for (int j = 0; j < 100; j++) {
-				Shape s = getIcon(i%2);
-				Main.grid.add(s, i,  j);
+		for (int i = 0; i < Params.world_width; i++) {
+			for (int j = 0; j < Params.world_height; j++) {
+				Shape s = getIcon(0);
+				Main.grid.add(s, i * Main.sceneScale,  j * Main.sceneScale);
 			}
 		}
 		
