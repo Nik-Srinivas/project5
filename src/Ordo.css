@@ -1,0 +1,17 @@
+.root {
+	-fx-background-color: #364347;
+	-fx-font-size: 10pt;
+	-fx-font-family: "Century Gothic", sans-serif;
+	-fx-font-size:12px;
+	
+
+}
+
+.button-style {
+	-fx-font-family: "Century Gothic", sans-serif;
+	-fx-font-size: 16px;
+	-fx-text-fill: #e1eef3;
+	-fx-background-color: #02baf2;
+	
+	
+}

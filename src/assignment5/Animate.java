@@ -19,7 +19,8 @@ public class Animate {
 	public void start(int animationCount) {
 		try {
 		for (int i = 0; i < animationCount; i++) {
-			TimeUnit.SECONDS.sleep(1);
+			TimeUnit.MILLISECONDS.sleep(500);
+			
 			animationTask.run();
 		}
 		} catch (Exception e1) {

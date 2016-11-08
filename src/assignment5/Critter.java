@@ -457,6 +457,8 @@ public abstract class Critter {
 								doubleSceneScale, 0.0,
 								0.0, doubleSceneScale,
 							});
+							p.setFill(toAdd.viewColor());
+							p.setStroke(toAdd.viewOutlineColor());
 							break;
 						case DIAMOND:
 							doubleSceneScale = Double.valueOf((double) Main.sceneScale);
@@ -467,6 +469,8 @@ public abstract class Critter {
 									0.0, doubleSceneScale/2.0,
 									
 							});
+							p.setFill(toAdd.viewColor());
+							p.setStroke(toAdd.viewOutlineColor());
 							break;
 						case STAR:
 							doubleSceneScale = Double.valueOf((double) Main.sceneScale);

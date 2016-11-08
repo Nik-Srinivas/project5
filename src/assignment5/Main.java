@@ -181,6 +181,7 @@ public class Main extends Application {
 		 	for (int i = 0; i < numberOfCritters; i += 1){
 		 		critterNames[i] = classNames[i];
 		 	}
+	   
 	        ObservableList<String> differentCritters = FXCollections.observableArrayList();
 	        for (int i = 0; i < numberOfCritters; i += 1) {
 	        	differentCritters.add(critterNames[i]);
@@ -206,8 +207,9 @@ public class Main extends Application {
 	            @Override
 	            public void handle(ActionEvent event) {
 	            	Critter.displayWorld();
-	            }
-	        });
+	            	
+	            }  
+	        } ) ;
 	        make.setOnAction(new EventHandler<ActionEvent>() {
 	        	@Override
 	        	public void handle(ActionEvent event) {
@@ -218,6 +220,7 @@ public class Main extends Application {
 	        			for (int i = 0; i < val; i += 1) {
 			        		Critter.makeCritter(critterType);
 	        			}
+	        			Critter.displayWorld();
 	        		} catch (InvalidCritterException e1) {
 	        			System.out.print("error processing: " + critterType + "\n");
 	        		}

@@ -1,6 +1,7 @@
 /*
  * Jonah Harris - Critter 2 of 2
  * 
+ * LOOK IN DOTIMESTEP()
  * Critter1 acts as a cheetah; that is, it fights any critters for food. It reproduces at
  * energy level 200 as it needs a lot of energy to keep running. This critter runs in a 
  * straight line either left or right, looking for prey. When the stats method is called, 
