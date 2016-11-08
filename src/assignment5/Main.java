@@ -133,9 +133,6 @@ public class Main extends Application {
 	        Button step = new Button("Run Time Step");
 	        Button quit = new Button("Quit");
 	        Button animate = new Button("Animate");
-	        Button triggerTheme = new Button("TRIGGERED");
-	        
-	        triggerTheme.getStyleClass().add("button-style");
 	        
 	        
 	        
@@ -240,7 +237,6 @@ public class Main extends Application {
 	        myLayout.add(step, 2, 2);
 	        myLayout.add(animate,  0, 30);
 	        myLayout.add(show, 0, 10);
-	        myLayout.add(triggerTheme,  0, 35);
 	        myLayout.add(critterStatsList, 0, 20);
 	        myLayout.add(quit, 0, 25);
 	        
