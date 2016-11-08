@@ -26,6 +26,7 @@ import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -136,6 +137,11 @@ public class Main extends Application {
 	        Button step = new Button("Run Time Step");
 	        Button quit = new Button("Quit");
 	        Button animate = new Button("Animate");
+	        Button triggerTheme = new Button("TRIGGERED");
+	        
+	        triggerTheme.getStyleClass().add("button-style");
+	        
+	        
 	        
 	        ObservableList<String> differentCritters = FXCollections.observableArrayList();
 	        for (int i = 0; i < numberOfCritters; i += 1) {
@@ -170,12 +176,14 @@ public class Main extends Application {
 	        TextField number_critters = new TextField();
 	        TextField step_number = new TextField();
 	        
+	        
 	        show.setOnAction(new EventHandler<ActionEvent>() {
 	            @Override
 	            public void handle(ActionEvent event) {
 	            	Critter.displayWorld();
-	            }
-	        });
+	            	
+	            }  
+	        } ) ;
 	        make.setOnAction(new EventHandler<ActionEvent>() {
 	        	@Override
 	        	public void handle(ActionEvent event) {
@@ -186,6 +194,7 @@ public class Main extends Application {
 	        			for (int i = 0; i < val; i += 1) {
 			        		Critter.makeCritter(critterType);
 	        			}
+	        			Critter.displayWorld();
 	        		} catch (InvalidCritterException e1) {
 	        			System.out.print("error processing: " + critterType + "\n");
 	        		}
@@ -226,17 +235,22 @@ public class Main extends Application {
 	        	}
 	        });
 	        
-	        myLayout.add(show, 0, 0);
-	        myLayout.add(number_critters, 0, 1);
+	        //make critters
+	        myLayout.add(listOfCritters, 0, 1);
+	        myLayout.add(number_critters, 1, 1);
 	        myLayout.add(make, 5, 1);
-	        myLayout.add(step, 5, 7);
-	        myLayout.add(step_number, 0, 7);
-	        myLayout.add(quit, 0, 25);
+	        //step
+	        myLayout.add(step_number, 0, 2);
+	        myLayout.add(step, 2, 2);
 	        myLayout.add(animate,  0, 30);
+	        myLayout.add(show, 0, 10);
+	        myLayout.add(triggerTheme,  0, 35);
 	        myLayout.add(critterStatsList, 0, 20);
-	        myLayout.add(listOfCritters, 0, 2);
+	        myLayout.add(quit, 0, 25);
 	        
-	        primaryStage.setScene(new Scene(myLayout, 300, 250));
+	        Scene myScene = new Scene(myLayout, 1000, 300);
+	        myScene.getStylesheets().add("Ordo.css"); 
+	        primaryStage.setScene(myScene);
 	        primaryStage.show();
 	    }
 
