@@ -158,6 +158,21 @@ public class Main extends Application {
 	     Button step = new Button("Run Time Step");
 	     Button quit = new Button("Quit");
 	     Button animate = new Button("Animate");
+	     Button grid = new Button("Scale");
+	     Label make_error = new Label("");
+	     Label step_error = new Label("");
+	     Label seed_error = new Label("");
+	     
+	  // Slider for scaling of grid display
+	        Slider grid_scale = new Slider();
+	        grid_scale.setMin(1);
+	        grid_scale.setMax(100);
+	        grid_scale.setValue(40);
+	        grid_scale.setShowTickLabels(false);
+	        grid_scale.setShowTickMarks(true);
+	        grid_scale.setMajorTickUnit(50);
+	        grid_scale.setMinorTickCount(5);
+	        grid_scale.setBlockIncrement(10);
 		 
 	     // Obtain Critter subclasses for make
 		 String workingDir = System.getProperty("user.dir") + "/src/assignment5";	
@@ -203,6 +218,13 @@ public class Main extends Application {
 	        seed_number.setPromptText("Seed value...");
 	        
 	        // Button Action Handling
+	        grid.setOnAction(new EventHandler<ActionEvent>() {
+	            @Override
+	            public void handle(ActionEvent event) {
+	            	sceneScale = (int)grid_scale.getValue();
+	            	Critter.displayWorld();
+	            }  
+	        } ) ;
 	        show.setOnAction(new EventHandler<ActionEvent>() {
 	            @Override
 	            public void handle(ActionEvent event) {
@@ -213,16 +235,19 @@ public class Main extends Application {
 	        make.setOnAction(new EventHandler<ActionEvent>() {
 	        	@Override
 	        	public void handle(ActionEvent event) {
-	        		
+	        		Label num_error = new Label("");
 	        		String critterType = listOfCritters.getValue();
 	        		try {
 	        			int val = Integer.parseInt(number_critters.getText());
 	        			for (int i = 0; i < val; i += 1) {
 			        		Critter.makeCritter(critterType);
 	        			}
+	        			make_error.setText("");
 	        			Critter.displayWorld();
 	        		} catch (InvalidCritterException e1) {
-	        			System.out.print("error processing: " + critterType + "\n");
+	        			
+	        		} catch (NumberFormatException e1) {
+	        			make_error.setText("Please enter an integer!");
 	        		}
 	        		statistics.refreshStats();
 	        		Critter.displayWorld();
@@ -231,25 +256,34 @@ public class Main extends Application {
 	        step.setOnAction(new EventHandler<ActionEvent>() {
 	        	@Override
 	        	public void handle(ActionEvent event) {
-	        		int val = Integer.parseInt(step_number.getText());
-	        		for (int i = 0; i < val; i += 1){
-	        			Critter.worldTimeStep();
-	        			//ADDED THIS SO DISPLAY AUTO UPDATES
+	        		try {
+	        			int val = Integer.parseInt(step_number.getText());
+	        			for (int i = 0; i < val; i += 1){
+	        				Critter.worldTimeStep();
+	        				Critter.displayWorld();
+	        			}
+	        			statistics.refreshStats();
+	        			step_error.setText("");
 	        			Critter.displayWorld();
+	        		} catch (NumberFormatException e1) {
+	        			step_error.setText("Please enter an integer!");
 	        		}
-	        		statistics.refreshStats();
-	        		Critter.displayWorld();
 	        	}
 	        });
 	        seed.setOnAction(new EventHandler<ActionEvent>() {
 	        	@Override
 	        	public void handle(ActionEvent event) {
-	        		long val = Long.parseLong(step_number.getText());
-	        		for (int i = 0; i < val; i += 1){
-	        			Critter.setSeed(val);
+	        		try {
+	        			long val = Long.parseLong(step_number.getText());
+	        			for (int i = 0; i < val; i += 1){
+	        				Critter.setSeed(val);
+	        			}
+	        			statistics.refreshStats();
+	        			seed_error.setText("");
+	        			Critter.displayWorld();
+	        		} catch (NumberFormatException e1) {
+	        			seed_error.setText("Please enter an integer or a decimal!");
 	        		}
-	        		statistics.refreshStats();
-	        		Critter.displayWorld();
 	        	}
 	        });
 	        quit.setOnAction(new EventHandler<ActionEvent>() {
@@ -273,29 +307,7 @@ public class Main extends Application {
 	        primaryStage.setWidth(primaryScreenBounds.getWidth()/2);
 	        primaryStage.setHeight(primaryScreenBounds.getHeight()/2);
 	        
-	        
-	        // Extra code (may use)
-//	        myLayout.setMaxSize(primaryScreenBounds.getHeight(), primaryScreenBounds.getWidth());
-//	        myLayout.add(number_critters, 0, 1);
-//	        myLayout.add(make, 5, 1);
-//	        myLayout.add(step, 5, 7);
-//	        myLayout.add(step_number, 0, 7);
-//	        myLayout.add(quit, (int)primaryScreenBounds.getHeight(), (int)primaryScreenBounds.getWidth());
-//	        myLayout.add(animate,  0, 30);
-//	        //myLayout.add(critterStatsList, 0, 20);
-//	        myLayout.add(listOfCritters, 0, 2);
-	        
-	        // Slider for time steps
-//	        Slider slider = new Slider();
-//	        slider.setMin(1);
-//	        slider.setMax(100);
-//	        slider.setValue(40);
-//	        slider.setShowTickLabels(true);
-//	        slider.setShowTickMarks(true);
-//	        slider.setMajorTickUnit(50);
-//	        slider.setMinorTickCount(5);
-//	        slider.setBlockIncrement(10);
-	        
+	       // Adding objects/children and placing children 
 	        top.setSpacing(10);
 	        bottom.setSpacing(10);
 	        left.setSpacing(10);
@@ -313,19 +325,27 @@ public class Main extends Application {
 	        bottom.getChildren().addAll(quit);
 	        left.getChildren().addAll(seed);
 	        center.setPadding(new Insets(15, 12, 15, 12));
-	        center.add(new Label("Make Critters"), 0, row);
+	        center.add(new Label("Make Critters:"), 0, row);
 	        center.add(listOfCritters, 0, row + 1);
 	        center.add(number_critters, 1, row + 1);
 	        center.add(make, 2, row + 1);
-	        center.add(new Label("Critter Motion Handling"), 0, row + 4);
-	        center.add(step_number, 1, row + 5);
-	        center.add(step, 2, row + 5);
-	        center.add(animate, 2, row + 6);
+	        center.add(new Label("Critter Motion Handling:"), 0, row + 3);
+	        center.add(step_number, 0, row + 4);
+	        center.add(step, 1, row + 4);
+	        center.add(animate, 0, row + 5);
 	        // Add a slider if we can
-	        center.add(new Label("Set Seed"), 0, row + 9);
-	        center.add(seed_number, 1, row + 10);
-	        center.add(seed, 2, row + 10);
-	        center.add(quit, 10, row + 12);
+	        center.add(new Label("Set Seed:"), 0, row + 7);
+	        center.add(seed_number, 0, row + 8);
+	        center.add(seed, 1, row + 8);
+	        center.add(new Label("Scale Grid:"), 0, row + 10);
+	        center.add(grid, 1, row + 11);
+	        center.add(grid_scale, 0, row + 11);
+	        center.add(quit, 2, row + 11);
+	        
+	        // Error messages
+	        center.add(make_error, 3, row + 1);
+	        center.add(step_error, 2, row + 4);
+	        center.add(seed_error, 2, row + 8);
 	        
 	        // Final steps to display
 	        borders.setTop(top);
