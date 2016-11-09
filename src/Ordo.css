@@ -95,3 +95,20 @@
 .accordion .titled-pane .title:hover {
 	-fx-background-color: #02baf2;
 }
+
+
+.slider .thumb{
+    -fx-background-color: #e1eef3;
+    -fx-background-radius:100;
+    -fx-border-radius: 100;
+    -fx-padding: 8px;
+    -fx-border-color: #364347;
+    -fx-border-width: 2px;
+}
+
+.slider .track {
+    -fx-background-color: #364347;  /* Hide the track */
+    -fx-background-insets: 1 0 -1 0, 0, 1;
+    -fx-background-radius: 2.5, 2.5, 1.5;
+    -fx-padding: 0.208333em; /* 2.5 */
+}
