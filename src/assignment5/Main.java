@@ -118,7 +118,7 @@ public class Main extends Application {
 	        for (int i = 0; i < numberOfCritters; i += 1) { 
 	        		String critter_stats = updateStats(critterNames[i]);
 	        	    tps[i] = new TitledPane();
-	        	    tps[i].setText(critterNames[i] + " Statistics (" + critterNames[i].toString() + ")");
+	        	    tps[i].setText(critterNames[i] + " Statistics");
 	        	    tps[i].setContent(new Label("\n" + critter_stats));
 	        }   
 	        critterStatsList.getPanes().addAll(tps);
@@ -170,7 +170,7 @@ public class Main extends Application {
 	        grid_scale.setMax(100);
 	        grid_scale.setValue(40);
 	        grid_scale.setShowTickLabels(false);
-	        grid_scale.setShowTickMarks(true);
+	        grid_scale.setShowTickMarks(false);
 	        grid_scale.setMajorTickUnit(50);
 	        grid_scale.setMinorTickCount(5);
 	        grid_scale.setBlockIncrement(10);
@@ -236,19 +236,23 @@ public class Main extends Application {
 	        make.setOnAction(new EventHandler<ActionEvent>() {
 	        	@Override
 	        	public void handle(ActionEvent event) {
-	        		Label num_error = new Label("");
 	        		String critterType = listOfCritters.getValue();
 	        		try {
 	        			int val = Integer.parseInt(number_critters.getText());
-	        			for (int i = 0; i < val; i += 1) {
-			        		Critter.makeCritter(critterType);
+	        			if (val < 0) {
+	        				make_error.setText("Please enter a positive integer!");
 	        			}
-	        			make_error.setText("");
-	        			Critter.displayWorld();
+	        			else {
+	        				for (int i = 0; i < val; i += 1) {
+	        					Critter.makeCritter(critterType);
+	        				}
+	        				make_error.setText("");
+	        				Critter.displayWorld();
+	        			}
 	        		} catch (InvalidCritterException e1) {
 	        			
 	        		} catch (NumberFormatException e1) {
-	        			make_error.setText("Please enter an integer!");
+	        			make_error.setText("Please enter a positive integer!");
 	        		}
 	        		statistics.refreshStats();
 	        		Critter.displayWorld();
@@ -259,15 +263,20 @@ public class Main extends Application {
 	        	public void handle(ActionEvent event) {
 	        		try {
 	        			int val = Integer.parseInt(step_number.getText());
-	        			for (int i = 0; i < val; i += 1){
-	        				Critter.worldTimeStep();
+	        			if (val < 0) {
+	        				step_error.setText("Please enter a positive integer!");
+	        			}
+	        			else {
+	        				for (int i = 0; i < val; i += 1){
+	        					Critter.worldTimeStep();
+	        					Critter.displayWorld();
+	        				}
+	        				statistics.refreshStats();
+	        				step_error.setText("");
 	        				Critter.displayWorld();
 	        			}
-	        			statistics.refreshStats();
-	        			step_error.setText("");
-	        			Critter.displayWorld();
 	        		} catch (NumberFormatException e1) {
-	        			step_error.setText("Please enter an integer!");
+	        			step_error.setText("Please enter a positive integer!");
 	        		}
 	        	}
 	        });
@@ -275,15 +284,19 @@ public class Main extends Application {
 	        	@Override
 	        	public void handle(ActionEvent event) {
 	        		try {
-	        			long val = Long.parseLong(step_number.getText());
-	        			for (int i = 0; i < val; i += 1){
-	        				Critter.setSeed(val);
+	        			
+	        			long val = Long.parseLong(seed_number.getText(), 10);
+	        			if (val < 0) {
+	        				seed_error.setText("Please enter a positive integer!");
 	        			}
-	        			statistics.refreshStats();
-	        			seed_error.setText("");
-	        			Critter.displayWorld();
+	        			else {
+	        				seed_error.setText("");
+	        				Critter.setSeed(val);
+	        				statistics.refreshStats();
+	        				Critter.displayWorld();
+	        			}
 	        		} catch (NumberFormatException e1) {
-	        			seed_error.setText("Please enter an integer or a decimal!");
+	        			seed_error.setText("Please enter a positive integer!");
 	        		}
 	        	}
 	        });
