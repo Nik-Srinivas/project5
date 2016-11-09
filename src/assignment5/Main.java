@@ -125,8 +125,9 @@ public class Main extends Application {
 	        critterStatsList.setExpandedPane(tps[0]);
 	        
 	        box.getChildren().addAll(critterStatsList);
-	        
-	        this.setScene(new Scene(box, primaryScreenBounds2.getWidth()/2, primaryScreenBounds2.getHeight()/2));
+	        Scene myScene = new Scene(box, primaryScreenBounds2.getWidth()/2, primaryScreenBounds2.getHeight()/2);
+	        myScene.setUserAgentStylesheet("Ordo.css");
+	        this.setScene(myScene);
 	        this.show(); 
     	}
     	
@@ -158,6 +159,7 @@ public class Main extends Application {
 	     Button step = new Button("Run Time Step");
 	     Button quit = new Button("Quit");
 	     Button animate = new Button("Animate");
+	     
 		 
 	     // Obtain Critter subclasses for make
 		 String workingDir = System.getProperty("user.dir") + "/src/assignment5";	
@@ -333,8 +335,9 @@ public class Main extends Application {
 	        borders.setRight(right);
 	        borders.setLeft(left);
 	        //borders.setCenter(center);
-	        
-	        primaryStage.setScene(new Scene(center, primaryScreenBounds.getWidth()/2, primaryScreenBounds.getHeight()/2));
+	        Scene myScene = new Scene(center, primaryScreenBounds.getWidth()/2, primaryScreenBounds.getHeight()/2);
+	        myScene.setUserAgentStylesheet("Ordo.css");
+	        primaryStage.setScene(myScene);
 	        primaryStage.show();
 	        Critter.displayWorld();
 	    }

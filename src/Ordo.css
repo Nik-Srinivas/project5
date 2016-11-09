@@ -1,17 +1,97 @@
 .root {
-	-fx-background-color: #364347;
+	-fx-background-color: #b2c6cd;
 	-fx-font-size: 10pt;
 	-fx-font-family: "Century Gothic", sans-serif;
-	-fx-font-size:12px;
-	
+	-fx-font-size:18px;
+	-fx-text-fill: #364347;
 
 }
 
-.button-style {
+.button {
 	-fx-font-family: "Century Gothic", sans-serif;
-	-fx-font-size: 16px;
+	-fx-font-size: 14px;
 	-fx-text-fill: #e1eef3;
 	-fx-background-color: #02baf2;
+	-fx-background-radius: 6px;
+	-fx-padding: 10px;
 	
 	
+}
+
+.button:hover {
+	-fx-background-color: #009dcd;
+	
+}
+
+.quit-button-style {
+	-fx-font-family: "Century Gothic", sans-serif;
+	-fx-font-size: 10px;
+	-fx-text-fill: #e1eef3;
+	-fx-background-color: #f84545;
+}
+
+.text-field {
+	-fx-background-color: #e1eef3;
+	-fx-background-radius: 6px;
+	-fx-padding: 10px;
+	-fx-font-size: 16px;
+	-fx-prompt-text-fill: #93a4aa;
+	-fx-text-fill: #364347;
+	-fx-highlight-text-fill: #000000;
+	-fx-border-width: 2px;
+	-fx-border-radius: 6px;
+	-fx-border-color: TRANSPARENT;
+	 
+
+}
+
+.text-field:hover {
+	-fx-border-color: #02baf2;  
+}
+
+.combo-box .list-cell 
+{
+    -fx-background: #e1eef3;
+    -fx-background-radius: 6px;
+    -fx-background-color: #e1eef3;
+    -fx-padding: 3 0 2 7;
+    -fx-cell-size: 1.66667em;
+     
+}
+
+.combo-box-popup .list-view 
+{
+    -fx-background-color: #02baf2, #e1eef3;
+    -fx-background-radius: 6px;
+    -fx-background-insets: 0, 1;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 8, 0.0 , 0 , 0 );
+    -fx-border-width: 2px;
+	-fx-border-radius: 6px;
+	-fx-border-color: #02baf2;
+} 
+
+.combo-box-popup .list-view .list-cell:hover {
+    -fx-text-fill: #e1eef3;
+    -fx-background-color: #02baf2;
+    
+}
+
+.titled-pane:hover
+{
+	-fx-text-fill: #e1eef3;
+	-fx-background-color: #000000;
+}
+.accordion .titled-pane > *.content{
+    -fx-background-color: #b2c6cd ;
+}
+
+.accordion .titled-pane .title {
+	-fx-padding: 10px;
+	-fx-border-width: 2px;
+	-fx-border-color: #b2c6cd;
+	-fx-background-color: #e1eef3;
+}
+
+.accordion .titled-pane .title:hover {
+	-fx-background-color: #02baf2;
 }
